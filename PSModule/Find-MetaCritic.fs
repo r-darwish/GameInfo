@@ -19,11 +19,14 @@ type FindMetaCritic() =
     [<Parameter>]
     member val Throttle: int = 5 with get, set
 
+    [<Parameter>]
+    member val Platform = MetaCritic.Platform.All with get, set
+
     override x.ProcessRecord() =
         base.ProcessRecord()
 
         x.Game
-        |> Array.map MetaCritic.find
+        |> Array.map (MetaCritic.find x.Platform)
         |> Async.ParallelThrottle x.Throttle
         |> Async.RunSynchronously
         |> Seq.ofArray
