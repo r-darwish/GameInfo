@@ -92,8 +92,8 @@ type GetResult =
 
 let private score typeFunc text =
     match text with
-    | "tbd" -> Nullable()
-    | n -> n |> typeFunc |> Nullable
+    | "tbd" -> None
+    | n -> n |> typeFunc |> Some
 
 let private metaScore = score uint
 let private userScore = score float
@@ -107,7 +107,7 @@ let private processResult (result: HtmlNode) =
     let score = text ".metascore_w" |> metaScore
 
     { Title = title
-      MetaScore = score
+      MetaScore = score |> Option.toNullable
       Platform = platform }
 
 let find (platform: Platform) (game: string) =
@@ -145,7 +145,7 @@ let get (platform: Platform) (game: string) =
                 sprintf
                     "https://www.metacritic.com/game/%s/%s"
                     ((platformToString platform).ToLower())
-                    (game.ToLower().Replace(" ", "-"))
+                    (game.ToLower().Replace("& ", "").Replace(" ", "-"))
             )
 
         let text selector =
@@ -153,18 +153,17 @@ let get (platform: Platform) (game: string) =
 
             match results.Length with
             | 0 -> None
-            | _ -> Some doc.CssSelect(selector).Head.InnerText().Trim()
+            | _ -> Some(results.Head.InnerText().Trim())
 
         let metaScore =
-            text ".metascore_w" |> metaScore
+            text ".metascore_w" |> Option.bind metaScore
 
         let userScore =
-            text ".metascore_w.user"
-            |> Nullable.bind userScore
+            text ".metascore_w.user" |> Option.bind userScore
 
         return
             { Title = game
               Platform = platform
-              MetaScore = metaScore
-              UserScore = userScore }
+              MetaScore = (metaScore |> Option.toNullable)
+              UserScore = (userScore |> Option.toNullable) }
     }

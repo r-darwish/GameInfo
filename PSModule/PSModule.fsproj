@@ -1,26 +1,22 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
-
- <ItemGroup>
+  <ItemGroup>
     <None Include="GameInfo.psd1" Pack="true" CopyToOutputDirectory="Always" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="Async.fs" />
+    <Compile Include="Option.fs" />
     <Compile Include="MetaCritic.fs" />
     <Compile Include="Get-MetaCritic.fs" />
     <Compile Include="Find-MetaCritic.fs" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="FSharp.Data" Version="3.3.3" />
     <PackageReference Include="FSharpPlus" Version="1.1.6" />
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
   </ItemGroup>
-
 </Project>
