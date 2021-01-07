@@ -24,3 +24,6 @@ Get information about a specific game:
 ```powershell
 Get-MetaCritic bayonetta -Platform switch
 ```
+
+## Alternatives
+* [entertainme](https://github.com/drrlvn/entertainme)
