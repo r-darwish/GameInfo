@@ -30,7 +30,7 @@
     Copyright         = '(c) Roey Darwish Dror. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description       = ''
+    Description       = 'Fetch information about video games'
 
     # Minimum version of the PowerShell engine required by this module
     # PowerShellVersion = ''
