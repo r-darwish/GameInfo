@@ -3,12 +3,8 @@
 open System.Management.Automation
 open FSharpPlus
 
-module Async =
-    /// A wrapper around the throttling overload of Parallel to allow easier pipelining.
-    let ParallelThrottle throttle workflows = Async.Parallel(workflows, throttle)
-
 [<Cmdlet("Find", "MetaCritic")>]
-[<OutputType(typeof<string>)>]
+[<OutputType(typeof<MetaCritic.FindResult>)>]
 type FindMetaCritic() =
     inherit PSCmdlet()
 

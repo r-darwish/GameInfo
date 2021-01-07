@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Async.fs" />
     <Compile Include="MetaCritic.fs" />
+    <Compile Include="Get-MetaCritic.fs" />
     <Compile Include="Find-MetaCritic.fs" />
   </ItemGroup>
 

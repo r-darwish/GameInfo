@@ -1,6 +1,7 @@
 module MetaCritic
 
 open FSharp.Data
+open FSharpPlus
 open System
 
 type Platform =
@@ -27,6 +28,31 @@ type Platform =
     | Dreamcast = 15
     | All = 0
 
+let private platformToString value =
+    match value with
+    | Platform.PS5 -> "playstation-5"
+    | Platform.PS4 -> "playstation-4"
+    | Platform.PS3 -> "playstation-3"
+    | Platform.XboxOne -> "xbox-one"
+    | Platform.Xbox360 -> "xbox-360"
+    | Platform.PC -> "PC"
+    | Platform.DS -> "DS"
+    | Platform.N3DS -> "3DS"
+    | Platform.PsVita -> "VITA"
+    | Platform.PSP -> "PSP"
+    | Platform.Wii -> "WII"
+    | Platform.WiiU -> "WII-U"
+    | Platform.Switch -> "Switch"
+    | Platform.PS2 -> "PS2"
+    | Platform.PS -> "PS"
+    | Platform.GBA -> "GBA"
+    | Platform.IOS -> "iOS"
+    | Platform.Xbox -> "XBOX"
+    | Platform.GameCube -> "GC"
+    | Platform.N64 -> "N64"
+    | Platform.Dreamcast -> "Dreamcast"
+    | _ -> failwith "Internal Error"
+
 let private platfromFromString value =
     match value with
     | "PS5" -> Platform.PS5
@@ -52,10 +78,25 @@ let private platfromFromString value =
     | "Dreamcast" -> Platform.Dreamcast
     | _ -> failwith (sprintf "Unknown platform %s" value)
 
-type Result =
+type FindResult =
     { Title: string
-      Score: Nullable<uint>
+      MetaScore: Nullable<uint>
       Platform: Platform }
+
+type GetResult =
+    { Title: string
+      MetaScore: Nullable<uint>
+      UserScore: Nullable<float>
+      Platform: Platform }
+
+
+let private score typeFunc text =
+    match text with
+    | "tbd" -> Nullable()
+    | n -> n |> typeFunc |> Nullable
+
+let private metaScore = score uint
+let private userScore = score float
 
 let private processResult (result: HtmlNode) =
     let text selector =
@@ -63,17 +104,13 @@ let private processResult (result: HtmlNode) =
 
     let title = text ".product_title > a"
     let platform = text ".platform" |> platfromFromString
-
-    let score =
-        match text (".metascore_w") with
-        | "tbd" -> Nullable()
-        | n -> n |> uint |> Nullable
+    let score = text ".metascore_w" |> metaScore
 
     { Title = title
-      Score = score
+      MetaScore = score
       Platform = platform }
 
-let find (platform: Platform) game =
+let find (platform: Platform) (game: string) =
     let rec findPage page =
         async {
             let url =
@@ -100,3 +137,34 @@ let find (platform: Platform) game =
         }
 
     findPage 0
+
+let get (platform: Platform) (game: string) =
+    async {
+        let! doc =
+            HtmlDocument.AsyncLoad(
+                sprintf
+                    "https://www.metacritic.com/game/%s/%s"
+                    ((platformToString platform).ToLower())
+                    (game.ToLower().Replace(" ", "-"))
+            )
+
+        let text selector =
+            let results = doc.CssSelect(selector)
+
+            match results.Length with
+            | 0 -> None
+            | _ -> Some doc.CssSelect(selector).Head.InnerText().Trim()
+
+        let metaScore =
+            text ".metascore_w" |> metaScore
+
+        let userScore =
+            text ".metascore_w.user"
+            |> Nullable.bind userScore
+
+        return
+            { Title = game
+              Platform = platform
+              MetaScore = metaScore
+              UserScore = userScore }
+    }
