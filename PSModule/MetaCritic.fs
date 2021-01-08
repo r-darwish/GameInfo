@@ -173,7 +173,8 @@ let get (gameUri: Uri): Async<GameData> =
             | _ -> Some(results.Head.InnerText().Trim())
 
         let metaScore =
-            text ".metascore_w" |> Option.bind metaScore
+            text ".metascore_w.xlarge"
+            |> Option.bind metaScore
 
         let userScore =
             text ".metascore_w.user" |> Option.bind userScore
