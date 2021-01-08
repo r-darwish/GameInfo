@@ -2,6 +2,7 @@ namespace GameInfo.Powershell
 
 open System.Management.Automation
 open FSharpPlus
+open System
 
 [<Cmdlet("Get", "MetaCritic", DefaultParameterSetName = "Results")>]
 [<OutputType(typeof<string>)>]
@@ -9,8 +10,8 @@ type GetMetaCritic() =
     inherit PSCmdlet()
 
     [<ValidateNotNullOrEmpty>]
-    [<Parameter(ValueFromPipeline = true, Position = 0, ParameterSetName = "Results")>]
-    member val Result: MetaCritic.FindResult [] = [||] with get, set
+    [<Parameter(ValueFromPipelineByPropertyName = true, Position = 0, ParameterSetName = "Results")>]
+    member val Uri: Uri [] = [||] with get, set
 
     [<ValidateNotNullOrEmpty>]
     [<Parameter(ValueFromPipeline = true, Position = 0, ParameterSetName = "Flags")>]
@@ -19,7 +20,7 @@ type GetMetaCritic() =
     [<Parameter>]
     member val Throttle: int = 5 with get, set
 
-    [<Parameter(ParameterSetName = "Flags")>]
+    [<Parameter(ParameterSetName = "Flags", Mandatory = true)>]
     member val Platform = MetaCritic.Platform.All with get, set
 
     override x.ProcessRecord() =
@@ -27,17 +28,17 @@ type GetMetaCritic() =
 
         let input =
             if x.Game.Length > 0 then
+                let gameUri = MetaCritic.gameUri x.Platform
+
                 if x.Platform = MetaCritic.Platform.All then
                     do failwith "Cannot use the All platform with the command"
 
-                x.Game
-                |> Array.map (fun game -> (game, x.Platform))
+                x.Game |> Array.map gameUri
             else
-                x.Result
-                |> Array.map (fun result -> (result.Title, result.Platform))
+                x.Uri
 
         input
-        |> Array.map (fun (title, platform) -> MetaCritic.get platform title)
+        |> Array.map MetaCritic.get
         |> Async.ParallelThrottle x.Throttle
         |> Async.RunSynchronously
         |> Array.iter x.WriteObject

@@ -55,18 +55,24 @@ let private platformToString value =
 
 let private platfromFromString value =
     match value with
+    | "PlayStation 5"
     | "PS5" -> Platform.PS5
+    | "PlayStation 4"
     | "PS4" -> Platform.PS4
+    | "PlayStation 3"
     | "PS3" -> Platform.PS3
+    | "Xbox One"
     | "XONE" -> Platform.XboxOne
+    | "Xbox 360"
     | "X360" -> Platform.Xbox360
     | "PC" -> Platform.PC
     | "DS" -> Platform.DS
     | "3DS" -> Platform.N3DS
     | "VITA" -> Platform.PsVita
     | "PSP" -> Platform.PSP
-    | "WII" -> Platform.Wii
-    | "WIIU" -> Platform.WiiU
+    | "Wii" -> Platform.Wii
+    | "WIIU"
+    | "Wii U" -> Platform.WiiU
     | "Switch" -> Platform.Switch
     | "PS2" -> Platform.PS2
     | "PS" -> Platform.PS
@@ -81,13 +87,15 @@ let private platfromFromString value =
 type FindResult =
     { Title: string
       MetaScore: Nullable<uint>
-      Platform: Platform }
+      Platform: Platform
+      Uri: Uri }
 
-type GetResult =
+type GameData =
     { Title: string
       MetaScore: Nullable<uint>
       UserScore: Nullable<float>
-      Platform: Platform }
+      Platform: Platform
+      Uri: Uri }
 
 
 let private score typeFunc text =
@@ -106,9 +114,17 @@ let private processResult (result: HtmlNode) =
     let platform = text ".platform" |> platfromFromString
     let score = text ".metascore_w" |> metaScore
 
+    let uri =
+        ("https://www.metacritic.com"
+         + result
+             .CssSelect(".product_title > a")
+             .Head.AttributeValue("href"))
+        |> Uri
+
     { Title = title
       MetaScore = score |> Option.toNullable
-      Platform = platform }
+      Platform = platform
+      Uri = uri }
 
 let find (platform: Platform) (game: string) =
     let rec findPage page =
@@ -138,15 +154,16 @@ let find (platform: Platform) (game: string) =
 
     findPage 0
 
-let get (platform: Platform) (game: string) =
+let gameUri (platform: Platform) (game: string): Uri =
+    sprintf
+        "https://www.metacritic.com/game/%s/%s"
+        ((platformToString platform).ToLower())
+        (game.ToLower().Replace("& ", "").Replace(" ", "-"))
+    |> Uri
+
+let get (gameUri: Uri): Async<GameData> =
     async {
-        let! doc =
-            HtmlDocument.AsyncLoad(
-                sprintf
-                    "https://www.metacritic.com/game/%s/%s"
-                    ((platformToString platform).ToLower())
-                    (game.ToLower().Replace("& ", "").Replace(" ", "-"))
-            )
+        let! doc = HtmlDocument.AsyncLoad(gameUri.ToString())
 
         let text selector =
             let results = doc.CssSelect(selector)
@@ -162,8 +179,12 @@ let get (platform: Platform) (game: string) =
             text ".metascore_w.user" |> Option.bind userScore
 
         return
-            { Title = game
-              Platform = platform
+            { Title = text "h1" |> Option.get
+              Platform =
+                  text ".platform > a"
+                  |> Option.get
+                  |> platfromFromString
               MetaScore = (metaScore |> Option.toNullable)
-              UserScore = (userScore |> Option.toNullable) }
+              UserScore = (userScore |> Option.toNullable)
+              Uri = gameUri }
     }
