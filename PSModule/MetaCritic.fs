@@ -6,9 +6,9 @@ open System
 
 type Platform =
     | PS4 = 72496
-    | PS5 = 99999 // Still unknown
-    | Stadia = 99999 // Still unknown
-    | XboxSeriesX = 99999 // Still unknown
+    | PS5 = 100000 // Still unknown
+    | Stadia = 100001 // Still unknown
+    | XboxSeriesX = 100002 // Still unknown
     | PS3 = 1
     | XboxOne = 80000
     | Xbox360 = 2
