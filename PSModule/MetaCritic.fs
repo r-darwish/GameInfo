@@ -7,6 +7,8 @@ open System
 type Platform =
     | PS4 = 72496
     | PS5 = 99999 // Still unknown
+    | Stadia = 99999 // Still unknown
+    | XboxSeriesX = 99999 // Still unknown
     | PS3 = 1
     | XboxOne = 80000
     | Xbox360 = 2
@@ -51,6 +53,8 @@ let private platformToString value =
     | Platform.GameCube -> "GC"
     | Platform.N64 -> "N64"
     | Platform.Dreamcast -> "Dreamcast"
+    | Platform.Stadia -> "Stadia"
+    | Platform.XboxSeriesX -> "Xbox Series X"
     | _ -> failwith "Internal Error"
 
 let private platfromFromString value =
@@ -68,6 +72,7 @@ let private platfromFromString value =
     | "PC" -> Platform.PC
     | "DS" -> Platform.DS
     | "3DS" -> Platform.N3DS
+    | "PlayStation Vita"
     | "VITA" -> Platform.PsVita
     | "PSP" -> Platform.PSP
     | "WII" -> Platform.Wii
@@ -75,17 +80,24 @@ let private platfromFromString value =
     | "WIIU"
     | "Wii U" -> Platform.WiiU
     | "Switch" -> Platform.Switch
+    | "PlayStation 2"
     | "PS2" -> Platform.PS2
+    | "PlayStation"
     | "PS" -> Platform.PS
     | "Game Boy Advance"
     | "GBA" -> Platform.GBA
     | "iOS" -> Platform.IOS
+    | "Xbox"
     | "XBOX" -> Platform.Xbox
     | "GameCube"
     | "GC" -> Platform.GameCube
     | "Nintendo 64"
     | "N64" -> Platform.N64
     | "Dreamcast" -> Platform.Dreamcast
+    | "STA"
+    | "Stadia" -> Platform.Stadia
+    | "XBSX"
+    | "Xbox Series X" -> Platform.XboxSeriesX
     | _ -> failwith (sprintf "Unknown platform %s" value)
 
 type FindResult =
