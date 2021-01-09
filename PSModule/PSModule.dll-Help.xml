@@ -54,7 +54,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Throttle</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill Throttle Description }}</maml:para>
+            <maml:para>Maximum number of parallel requests for MetaCritic</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -66,7 +66,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>Title</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill Title Description }}</maml:para>
+            <maml:para>The name of the game</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
@@ -93,7 +93,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Throttle</maml:name>
         <maml:Description>
-          <maml:para>{{ Fill Throttle Description }}</maml:para>
+          <maml:para>Maximum number of parallel requests for MetaCritic</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -105,7 +105,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>Title</maml:name>
         <maml:Description>
-          <maml:para>{{ Fill Title Description }}</maml:para>
+          <maml:para>The name of the game</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
