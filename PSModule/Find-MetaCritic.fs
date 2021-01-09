@@ -21,10 +21,16 @@ type FindMetaCritic() =
     override x.ProcessRecord() =
         base.ProcessRecord()
 
-        x.Title
-        |> Array.map (MetaCritic.find x.Platform)
+        (Seq.collect Result.get (x.Title
+        |> Array.map (Async.protect (MetaCritic.find x.Platform))
         |> Async.ParallelThrottle x.Throttle
         |> Async.RunSynchronously
         |> Seq.ofArray
-        |> Seq.concat
+        |> Seq.filter
+            (fun result ->
+                match result with
+                | Ok (result) -> true
+                | Error (ex) ->
+                    x.WriteError(ErrorRecord(ex, "MetaCritic error", ErrorCategory.InvalidResult, System.Nullable()))
+                    false)))
         |> Seq.iter x.WriteObject

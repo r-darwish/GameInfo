@@ -38,7 +38,12 @@ type GetMetaCritic() =
                 x.Uri
 
         input
-        |> Array.map MetaCritic.get
+        |> Array.map (Async.protect MetaCritic.get)
         |> Async.ParallelThrottle x.Throttle
         |> Async.RunSynchronously
-        |> Array.iter x.WriteObject
+        |> Array.iter
+            (fun result ->
+                match result with
+                | Ok (result) -> x.WriteObject result
+                | Error (ex) ->
+                    x.WriteError(ErrorRecord(ex, "MetaCritic error", ErrorCategory.InvalidResult, Nullable())))
