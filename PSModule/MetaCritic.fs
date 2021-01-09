@@ -191,7 +191,9 @@ let get (gameUri: Uri): Async<GameData> =
         let publisher =
             text ".publisher > span > a" |> Option.get
 
-        let developer = text ".developer > .data" |> Option.get
+        let developer =
+            text ".developer > .data"
+            |> Option.defaultValue ""
 
         let platform =
             text ".platform"
