@@ -70,16 +70,20 @@ let private platfromFromString value =
     | "3DS" -> Platform.N3DS
     | "VITA" -> Platform.PsVita
     | "PSP" -> Platform.PSP
+    | "WII" -> Platform.Wii
     | "Wii" -> Platform.Wii
     | "WIIU"
     | "Wii U" -> Platform.WiiU
     | "Switch" -> Platform.Switch
     | "PS2" -> Platform.PS2
     | "PS" -> Platform.PS
+    | "Game Boy Advance"
     | "GBA" -> Platform.GBA
     | "iOS" -> Platform.IOS
     | "XBOX" -> Platform.Xbox
+    | "GameCube"
     | "GC" -> Platform.GameCube
+    | "Nintendo 64"
     | "N64" -> Platform.N64
     | "Dreamcast" -> Platform.Dreamcast
     | _ -> failwith (sprintf "Unknown platform %s" value)
@@ -95,7 +99,10 @@ type GameData =
       MetaScore: Nullable<uint>
       UserScore: Nullable<float>
       Platform: Platform
-      Uri: Uri }
+      Uri: Uri
+      Developer: String
+      Publisher: String
+      Rating: String }
 
 
 let private score typeFunc text =
@@ -179,12 +186,28 @@ let get (gameUri: Uri): Async<GameData> =
         let userScore =
             text ".metascore_w.user" |> Option.bind userScore
 
+        let title = text "h1" |> Option.get
+
+        let publisher =
+            text ".publisher > span > a" |> Option.get
+
+        let developer = text ".developer > .data" |> Option.get
+
+        let platform =
+            text ".platform"
+            |> Option.get
+            |> platfromFromString
+
+        let rating =
+            text ".product_rating > .data"
+            |> Option.defaultValue ""
+
         return
-            { Title = text "h1" |> Option.get
-              Platform =
-                  text ".platform > a"
-                  |> Option.get
-                  |> platfromFromString
+            { Title = title
+              Publisher = publisher
+              Developer = developer
+              Rating = rating
+              Platform = platform
               MetaScore = (metaScore |> Option.toNullable)
               UserScore = (userScore |> Option.toNullable)
               Uri = gameUri }
