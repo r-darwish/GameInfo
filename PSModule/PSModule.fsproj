@@ -6,6 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="GameInfo.psd1" Pack="true" CopyToOutputDirectory="Always" />
+    <None Include="PSModule.dll-Help.xml" Pack="true" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Async.fs" />

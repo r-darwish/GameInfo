@@ -4,36 +4,36 @@ open System.Management.Automation
 open FSharpPlus
 open System
 
-[<Cmdlet("Get", "MetaCritic", DefaultParameterSetName = "Results")>]
-[<OutputType(typeof<string>)>]
+[<Cmdlet("Get", "MetaCritic", DefaultParameterSetName = "Url")>]
+[<OutputType(typeof<MetaCritic.GameData>)>]
 type GetMetaCritic() =
     inherit PSCmdlet()
 
     [<ValidateNotNullOrEmpty>]
-    [<Parameter(ValueFromPipelineByPropertyName = true, Position = 0, ParameterSetName = "Results")>]
+    [<Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, Position = 0, ParameterSetName = "Url")>]
     member val Uri: Uri [] = [||] with get, set
 
     [<ValidateNotNullOrEmpty>]
-    [<Parameter(ValueFromPipeline = true, Position = 0, ParameterSetName = "Flags")>]
-    member val Game: string [] = [||] with get, set
+    [<Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = "GameTitle")>]
+    member val Title: string [] = [||] with get, set
+
+    [<Parameter(ParameterSetName = "GameTitle", Mandatory = true)>]
+    member val Platform = MetaCritic.Platform.All with get, set
 
     [<Parameter>]
     member val Throttle: int = 5 with get, set
-
-    [<Parameter(ParameterSetName = "Flags", Mandatory = true)>]
-    member val Platform = MetaCritic.Platform.All with get, set
 
     override x.ProcessRecord() =
         base.ProcessRecord()
 
         let input =
-            if x.Game.Length > 0 then
+            if x.Title.Length > 0 then
                 let gameUri = MetaCritic.gameUri x.Platform
 
                 if x.Platform = MetaCritic.Platform.All then
                     do failwith "Cannot use the All platform with the command"
 
-                x.Game |> Array.map gameUri
+                x.Title |> Array.map gameUri
             else
                 x.Uri
 
