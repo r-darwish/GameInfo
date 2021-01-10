@@ -12,6 +12,7 @@
     <Compile Include="Extensions/Async.fs" />
     <Compile Include="Extensions/Option.fs" />
     <Compile Include="Extensions/FSharp.Data.fs" />
+    <Compile Include="MetaCritic/Types.fs" />
     <Compile Include="MetaCritic/MetaCritic.fs" />
     <Compile Include="MetaCritic/Get-MetaCritic.fs" />
     <Compile Include="MetaCritic/Find-MetaCritic.fs" />

@@ -83,7 +83,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### MetaCritic+FindResult
+### FindResult
 
 ## NOTES
 

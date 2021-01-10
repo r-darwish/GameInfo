@@ -1,11 +1,11 @@
-namespace GameInfo.Powershell
+namespace GameInfo.Powershell.MetaCritic
 
 open System.Management.Automation
 open FSharpPlus
 open System
 
 [<Cmdlet("Get", "MetaCritic", DefaultParameterSetName = "Url")>]
-[<OutputType(typeof<MetaCritic.GameData>)>]
+[<OutputType(typeof<GameData>)>]
 type GetMetaCritic() =
     inherit PSCmdlet()
 
@@ -18,7 +18,7 @@ type GetMetaCritic() =
     member val Title: string [] = [||] with get, set
 
     [<Parameter(ParameterSetName = "GameTitle", Mandatory = true)>]
-    member val Platform = MetaCritic.Platform.All with get, set
+    member val Platform = Platform.All with get, set
 
     [<Parameter>]
     member val Throttle: int = 5 with get, set
@@ -30,7 +30,7 @@ type GetMetaCritic() =
             if x.Title.Length > 0 then
                 let gameUri = MetaCritic.gameUri x.Platform
 
-                if x.Platform = MetaCritic.Platform.All then
+                if x.Platform = Platform.All then
                     do failwith "Cannot use the All platform with the command"
 
                 x.Title |> Array.map gameUri
