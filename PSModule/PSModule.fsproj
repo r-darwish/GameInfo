@@ -9,12 +9,12 @@
     <None Include="PSModule.dll-Help.xml" Pack="true" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Async.fs" />
-    <Compile Include="Option.fs" />
-    <Compile Include="FSharp.Data.fs" />
-    <Compile Include="MetaCritic.fs" />
-    <Compile Include="Get-MetaCritic.fs" />
-    <Compile Include="Find-MetaCritic.fs" />
+    <Compile Include="Extensions/Async.fs" />
+    <Compile Include="Extensions/Option.fs" />
+    <Compile Include="Extensions/FSharp.Data.fs" />
+    <Compile Include="MetaCritic/MetaCritic.fs" />
+    <Compile Include="MetaCritic/Get-MetaCritic.fs" />
+    <Compile Include="MetaCritic/Find-MetaCritic.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FSharp.Data" Version="3.3.3" />
