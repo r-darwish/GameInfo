@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="Async.fs" />
     <Compile Include="Option.fs" />
+    <Compile Include="FSharp.Data.fs" />
     <Compile Include="MetaCritic.fs" />
     <Compile Include="Get-MetaCritic.fs" />
     <Compile Include="Find-MetaCritic.fs" />

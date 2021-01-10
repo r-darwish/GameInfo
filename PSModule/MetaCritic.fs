@@ -126,12 +126,19 @@ let private metaScore = score uint
 let private userScore = score float
 
 let private processResult (result: HtmlNode) =
-    let text selector =
-        result.CssSelect(selector).Head.InnerText().Trim()
+    let title =
+        result.ElementText ".product_title > a"
+        |> Option.get
 
-    let title = text ".product_title > a"
-    let platform = text ".platform" |> platfromFromString
-    let score = text ".metascore_w" |> metaScore
+    let platform =
+        result.ElementText ".platform"
+        |> Option.get
+        |> platfromFromString
+
+    let score =
+        result.ElementText ".metascore_w"
+        |> Option.get
+        |> metaScore
 
     let uri =
         ("https://www.metacritic.com"
@@ -184,36 +191,31 @@ let get (gameUri: Uri): Async<GameData> =
     async {
         let! doc = HtmlDocument.AsyncLoad(gameUri.ToString())
 
-        let text selector =
-            let results = doc.CssSelect(selector)
-
-            match results.Length with
-            | 0 -> None
-            | _ -> Some(results.Head.InnerText().Trim())
-
         let metaScore =
-            text ".metascore_w.xlarge"
+            doc.ElementText ".metascore_w.xlarge"
             |> Option.bind metaScore
 
         let userScore =
-            text ".metascore_w.user" |> Option.bind userScore
+            doc.ElementText ".metascore_w.user"
+            |> Option.bind userScore
 
-        let title = text "h1" |> Option.get
+        let title = doc.ElementText "h1" |> Option.get
 
         let publisher =
-            text ".publisher > span > a" |> Option.get
+            doc.ElementText ".publisher > span > a"
+            |> Option.get
 
         let developer =
-            text ".developer > .data"
+            doc.ElementText ".developer > .data"
             |> Option.defaultValue ""
 
         let platform =
-            text ".platform"
+            doc.ElementText ".platform"
             |> Option.get
             |> platfromFromString
 
         let rating =
-            text ".product_rating > .data"
+            doc.ElementText ".product_rating > .data"
             |> Option.defaultValue ""
 
         return
