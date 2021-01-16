@@ -1,0 +1,11 @@
+NUGET
+  remote: https://api.nuget.org/v3/index.json
+    FSharp.Core (5.0)
+    FSharp.Data (3.3.3)
+      FSharp.Core (>= 4.0.0.1) - restriction: >= net45
+      FSharp.Core (>= 4.3.4) - restriction: && (< net45) (>= netstandard2.0)
+    FSharpPlus (1.1.6)
+      FSharp.Core (>= 4.6.2) - restriction: || (>= net45) (>= netstandard2.0)
+      System.ValueTuple (>= 4.4) - restriction: >= net45
+    PowerShellStandard.Library (5.1)
+    System.ValueTuple (4.5) - restriction: >= net45
