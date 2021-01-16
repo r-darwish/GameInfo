@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -17,9 +18,5 @@
     <Compile Include="MetaCritic/Get-MetaCritic.fs" />
     <Compile Include="MetaCritic/Find-MetaCritic.fs" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="FSharp.Data" Version="3.3.3" />
-    <PackageReference Include="FSharpPlus" Version="1.1.6" />
-    <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
-  </ItemGroup>
+  <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
