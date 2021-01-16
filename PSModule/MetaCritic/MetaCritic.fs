@@ -138,10 +138,16 @@ let find (platform: Platform) (game: string) =
     findPage 0
 
 let gameUri (platform: Platform) (game: string): Uri =
-    sprintf
-        "https://www.metacritic.com/game/%s/%s"
-        ((platformToString platform).ToLower())
-        (game.ToLower().Replace("& ", "").Replace(" ", "-"))
+    let platform =
+        platform |> platformToString |> String.toLower
+
+    let game =
+        game
+        |> String.toLower
+        |> String.replace "& " ""
+        |> String.replace " " "-"
+
+    sprintf "https://www.metacritic.com/game/%s/%s" platform game
     |> Uri
 
 let get (gameUri: Uri): Async<GameData> =
