@@ -13,7 +13,7 @@ Find information in howlongtobeat.com
 ## SYNTAX
 
 ```
-Find-HowLongToBeat [[-Game] <String[]>] [-Throttle <Int32>] [<CommonParameters>]
+Find-HowLongToBeat [-Title <String[]>] [-Throttle <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,21 +28,6 @@ PS C:\> Find-HowLongToBeat Bayonetta
 
 ## PARAMETERS
 
-### -Game
-Game title
-
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -Throttle
 Maximum number of parallel requests for MetaCritic
 
@@ -55,6 +40,21 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Title
+Game title
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 

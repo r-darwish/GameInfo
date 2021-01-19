@@ -10,7 +10,7 @@ type FindHowLongToBeat() =
 
     [<ValidateNotNullOrEmpty>]
     [<Parameter(ValueFromPipeline = true, Position = 0)>]
-    member val Game: string [] = [||] with get, set
+    member val Title: string [] = [||] with get, set
 
     [<Parameter>]
     member val Throttle: int = 5 with get, set
@@ -18,7 +18,7 @@ type FindHowLongToBeat() =
     override x.ProcessRecord() =
         base.ProcessRecord()
 
-        x.Game
+        x.Title
         |> Array.map HowLongToBeat.findGame
         |> Async.ParallelThrottle x.Throttle
         |> Async.RunSynchronously
