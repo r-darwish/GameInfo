@@ -17,6 +17,9 @@
     <Compile Include="MetaCritic/MetaCritic.fs" />
     <Compile Include="MetaCritic/Get-MetaCritic.fs" />
     <Compile Include="MetaCritic/Find-MetaCritic.fs" />
+    <Compile Include="HowLongToBeat/Types.fs" />
+    <Compile Include="HowLongToBeat/HowLongToBeat.fs" />
+    <Compile Include="HowLongToBeat/Find-HowLongToBeat.fs" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
