@@ -2,6 +2,109 @@
 <helpItems schema="maml" xmlns="http://msh">
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Find-HowLongToBeat</command:name>
+      <command:verb>Find</command:verb>
+      <command:noun>HowLongToBeat</command:noun>
+      <maml:description>
+        <maml:para>Find information in howlongtobeat.com</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Find information in howlongtobeat.com</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Find-HowLongToBeat</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="none">
+          <maml:name>Game</maml:name>
+          <maml:description>
+            <maml:para>Game title</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Throttle</maml:name>
+          <maml:description>
+            <maml:para>Maximum number of parallel requests for MetaCritic</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="none">
+        <maml:name>Game</maml:name>
+        <maml:description>
+          <maml:para>Game title</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Throttle</maml:name>
+        <maml:description>
+          <maml:para>Maximum number of parallel requests for MetaCritic</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>System.String[]</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Find-HowLongToBeat Bayonetta</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Find-MetaCritic</command:name>
       <command:verb>Find</command:verb>
       <command:noun>MetaCritic</command:noun>
@@ -17,9 +120,9 @@
         <maml:name>Find-MetaCritic</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Platform</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Game platform to look</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValueGroup>
             <command:parameterValue required="false" command:variableLength="false">All</command:parameterValue>
             <command:parameterValue required="false" command:variableLength="false">PS3</command:parameterValue>
@@ -53,9 +156,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Throttle</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Maximum number of parallel requests for MetaCritic</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -65,9 +168,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>Title</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of the game</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
             <maml:name>String[]</maml:name>
@@ -80,9 +183,9 @@
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Platform</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Game platform to look</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Platform</command:parameterValue>
         <dev:type>
           <maml:name>Platform</maml:name>
@@ -92,9 +195,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Throttle</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Maximum number of parallel requests for MetaCritic</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -104,9 +207,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>Title</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The name of the game</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
           <maml:name>String[]</maml:name>
@@ -128,7 +231,7 @@
     <command:returnValues>
       <command:returnValue>
         <dev:type>
-          <maml:name>MetaCritic+FindResult</maml:name>
+          <maml:name>FindResult</maml:name>
         </dev:type>
         <maml:description>
           <maml:para></maml:para>
@@ -168,9 +271,9 @@
         <maml:name>Get-MetaCritic</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Platform</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Game platform</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValueGroup>
             <command:parameterValue required="false" command:variableLength="false">All</command:parameterValue>
             <command:parameterValue required="false" command:variableLength="false">PS3</command:parameterValue>
@@ -204,9 +307,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Throttle</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Maximum number of parallel requests for MetaCritic</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -216,9 +319,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>Title</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of the game</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
             <maml:name>String[]</maml:name>
@@ -231,9 +334,9 @@
         <maml:name>Get-MetaCritic</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Throttle</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Maximum number of parallel requests for MetaCritic</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -243,9 +346,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Uri</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>A Uri of a valid MetaCritic game data page</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Uri[]</command:parameterValue>
           <dev:type>
             <maml:name>Uri[]</maml:name>
@@ -258,9 +361,9 @@
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Platform</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Game platform</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Platform</command:parameterValue>
         <dev:type>
           <maml:name>Platform</maml:name>
@@ -270,9 +373,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Throttle</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Maximum number of parallel requests for MetaCritic</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -282,9 +385,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Uri</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>A Uri of a valid MetaCritic game data page</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Uri[]</command:parameterValue>
         <dev:type>
           <maml:name>Uri[]</maml:name>
@@ -294,9 +397,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>Title</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The name of the game</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
           <maml:name>String[]</maml:name>
@@ -326,7 +429,7 @@
     <command:returnValues>
       <command:returnValue>
         <dev:type>
-          <maml:name>MetaCritic+GameData</maml:name>
+          <maml:name>GameData</maml:name>
         </dev:type>
         <maml:description>
           <maml:para></maml:para>
